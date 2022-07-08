@@ -9,6 +9,10 @@ const inputBoxWithLabel = ({
 	pattern,
 	title,
 	customClasses,
+	max = 0,
+	eventListenerType = "click",
+	handleInput,
+	autocomplete,
 }) => {
 	const labelElement = document.createElement("label");
 	labelElement.innerText = label;
@@ -21,8 +25,11 @@ const inputBoxWithLabel = ({
 	inputElement.id = id;
 	inputElement.title = title;
 
+	if (autocomplete) inputElement.autocomplete = autocomplete;
 	if (pattern) inputElement.setAttribute("data-pattern", pattern);
-
+	if (max) inputElement.maxLength = max;
+	if (handleInput && eventListenerType)
+		inputElement.addEventListener(eventListenerType, handleInput);
 	if (customClasses) inputElement.classList.add(...customClasses);
 
 	const divElement = document.createElement("div");
@@ -78,6 +85,7 @@ const createForm = () => {
 		pattern: "^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$",
 		title: "Pan number must be of format XXXXXX-0000-X",
 		customClasses: ["input-uppercase"],
+		max: 10,
 	});
 
 	const phoneInputBox = inputBoxWithLabel({
@@ -88,6 +96,14 @@ const createForm = () => {
 		label: "Phone Number",
 		pattern: "^[0-9]{10}$",
 		title: "Phone number must be of 10 numbers",
+		max: 10,
+		handleInput: (e) => {
+			const regex = new RegExp("[0-9]");
+			if (!regex.test(e.key)) {
+				e.returnValue = false;
+			}
+		},
+		eventListenerType: "keypress",
 	});
 
 	const dateInputBox = inputBoxWithLabel({
@@ -104,9 +120,26 @@ const createForm = () => {
 		name: "cardNumber",
 		id: "card-number",
 		label: "Card Details",
-		pattern: "^[a-zA-Z0-9]{16}$",
-		title: "Credit Card number must of 16 characters",
+		title: "Credit Card number must of 16 numbers",
 		customClasses: ["input-uppercase"],
+		max: 19,
+		handleInput: (e) => {
+			const regex = new RegExp("[0-9]");
+			if (!regex.test(e.key)) {
+				e.returnValue = false;
+			} else {
+				setTimeout(() => {
+					const ccInputArray = e.target.value.split(" ");
+					const isFourNumbers =
+						ccInputArray[ccInputArray.length - 1].length === 4 ? true : false;
+					if (isFourNumbers && ccInputArray.length < 4) {
+						e.target.value += " ";
+					}
+				}, 0);
+			}
+		},
+		eventListenerType: "keypress",
+		autocomplete: "cc-number",
 	});
 
 	return [
@@ -118,8 +151,6 @@ const createForm = () => {
 		creditCardInputBox,
 	];
 };
-
-const checkValidation = (formElements) => {};
 
 const setErrorOnInputBox = (errorMsg, inputBox) => {
 	if (
@@ -154,6 +185,22 @@ const removeErrorOnInputBox = (inputBox) => {
 	inputBox.children[1].classList.remove("err-input");
 };
 
+const checkValidation = () => {
+	document.querySelectorAll(".inputBox").forEach((item) => {
+		const formInputElement = item.children[1];
+		const value = formInputElement.value;
+		const regex = new RegExp(formInputElement.getAttribute("data-pattern"));
+
+		if (value === "") {
+			setErrorOnInputBox("Required field", item);
+		} else if (!regex.test(value) && formInputElement.getAttribute("data-pattern")) {
+			setErrorOnInputBox(formInputElement.title, item);
+		} else {
+			removeErrorOnInputBox(item);
+		}
+	});
+};
+
 const constructForm = () => {
 	const root = document.getElementById("form");
 
@@ -171,20 +218,7 @@ const constructForm = () => {
 	submitButton.addEventListener("click", function (e) {
 		e.preventDefault();
 
-		document.querySelectorAll(".inputBox").forEach((item) => {
-			const formInputElement = item.children[1];
-			const value = formInputElement.value;
-			const regex = new RegExp(formInputElement.getAttribute("data-pattern"));
-
-			if (value === "") {
-				setErrorOnInputBox("Required field", item);
-			} else if (!regex.test(value) && formInputElement.getAttribute("data-pattern")) {
-				setErrorOnInputBox(formInputElement.title, item);
-			} else {
-				removeErrorOnInputBox(item);
-			}
-			// if (checkxValidation(formElements)) console.log("Submit");
-		});
+		if (checkValidation(formElements)) console.log("Registered successfully");
 	});
 
 	root.append(submitButton);
