@@ -46,7 +46,7 @@ main {
 	width: 100%;
 	margin: 1rem;
 	background: rgb(255, 255, 255);
-	padding: 2rem;
+	padding: 1rem;
 	border-radius: 20px;
 	max-width: 800px;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -156,6 +156,7 @@ h2 {
 	font-weight: 400;
 	color: var(--dark-gray);
 	margin-top: 0.5rem;
+	line-height: 1.25rem;
 }
 
 /* Utility classes */
@@ -188,4 +189,10 @@ h2 {
 
 .err-input {
 	border: var(--red) solid 1px;
+}
+
+@media (min-width: 400px) {
+	.container {
+		padding: 2rem;
+	}
 }
