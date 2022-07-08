@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Roboto", sans-serif;
+}
+
+:root {
+	--dark-gray: #374151;
+	--gray: #9ca3af;
+	--light-gray: #e5e7eb;
+	--black: #000000;
+	--white: #ffffff;
+	--blue: #2563eb;
+	--dark-blue: #1d4ed8;
+	--light-blue: #cffafe;
+	--red: #ef4444;
+}
+
+body,
+html {
+	height: 100%;
+	width: 100%;
+}
+
+main {
+	height: 100vh;
+	width: 100vw;
+	background-image: radial-gradient(
+		circle farthest-corner at 10.2% 55.8%,
+		rgba(252, 37, 103, 1) 0%,
+		rgba(250, 38, 151, 1) 46.2%,
+		rgba(186, 8, 181, 1) 90.1%
+	);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	height: fit-content;
+	width: 100%;
+	margin: 0 1rem;
+	background: rgb(255, 255, 255);
+	padding: 2rem;
+	border-radius: 20px;
+	max-width: 800px;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	z-index: 1;
+}
+
+#form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin: 1rem 0rem;
+}
+
+.logo-container {
+	height: 3.25rem;
+	width: 3.25rem;
+	background: var(--light-blue);
+	display: grid;
+	place-items: center;
+	border-radius: 9999px;
+	margin-right: 0.5rem;
+}
+
+.logo-img {
+	height: 2rem;
+}
+
+.inputBox {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	width: 100%;
+}
+
+/* Component classes */
+
+/* Input Box */
+label {
+	font-weight: 500;
+	font-size: 0.875rem;
+	color: var(--dark-gray);
+}
+
+input {
+	font-size: 0.875rem;
+	color: var(--black);
+	padding: 0.5rem;
+	border: var(--light-gray) 1px solid;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 0px;
+	border-radius: 8px;
+	line-height: 1.5;
+	position: relative;
+	width: 100%;
+}
+
+input.input-uppercase {
+	text-transform: uppercase;
+}
+
+input::placeholder {
+	color: var(--gray);
+	text-transform: none;
+}
+
+/* Button */
+button {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.75rem;
+	font-size: 0.825rem;
+	font-weight: 500;
+	color: var(--white);
+	background-color: var(--blue);
+	outline: none;
+	border: none;
+	cursor: pointer;
+	border-radius: 8px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 0px;
+}
+
+button:focus {
+	outline: var(--dark-blue) solid 2px;
+	outline-offset: 2px;
+}
+
+button:hover {
+	background-color: var(--dark-blue);
+}
+
+/* Decoratives */
+.line {
+	border-bottom: var(--light-gray) 1px solid;
+	width: 100%;
+}
+
+/* Heading */
+h1 {
+	font-size: 1.25rem;
+	font-weight: 500;
+	color: var(--black);
+}
+
+h2 {
+	font-size: 0.825rem;
+	font-weight: 400;
+	color: var(--dark-gray);
+	margin-top: 0.5rem;
+}
+
+/* Utility classes */
+
+.flex {
+	display: flex;
+}
+
+.flex-row {
+	flex-direction: row;
+}
+
+.flex-col {
+	flex-direction: column;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.err-msg {
+	font-size: 0.75rem;
+	font-weight: 500;
+	color: var(--red);
+}
+
+.err-input {
+	border: var(--red) solid 1px;
+}
