@@ -125,20 +125,24 @@ const createForm = () => {
 		max: 19,
 		handleInput: (e) => {
 			const regex = new RegExp("[0-9]");
-			if (!regex.test(e.key)) {
+			const isBackspace = e.key === "Backspace";
+
+			if (!regex.test(e.key) && !isBackspace) {
 				e.returnValue = false;
 			} else {
 				setTimeout(() => {
 					const ccInputArray = e.target.value.split(" ");
 					const isFourNumbers =
 						ccInputArray[ccInputArray.length - 1].length === 4 ? true : false;
-					if (isFourNumbers && ccInputArray.length < 4) {
+					if (isBackspace && ccInputArray[ccInputArray.length - 1].length === 0) {
+						e.target.value = e.target.value.substring(0, e.target.value.length - 1);
+					} else if (isFourNumbers && ccInputArray.length < 4) {
 						e.target.value += " ";
 					}
 				}, 0);
 			}
 		},
-		eventListenerType: "keypress",
+		eventListenerType: "keydown",
 		autocomplete: "cc-number",
 	});
 
