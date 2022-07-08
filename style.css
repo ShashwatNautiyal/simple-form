@@ -26,8 +26,8 @@ html {
 }
 
 main {
-	height: 100vh;
-	width: 100vw;
+	min-height: 100vh;
+	min-width: 100vw;
 	background-image: radial-gradient(
 		circle farthest-corner at 10.2% 55.8%,
 		rgba(252, 37, 103, 1) 0%,
@@ -44,7 +44,7 @@ main {
 	flex-direction: column;
 	height: fit-content;
 	width: 100%;
-	margin: 0 1rem;
+	margin: 1rem;
 	background: rgb(255, 255, 255);
 	padding: 2rem;
 	border-radius: 20px;
